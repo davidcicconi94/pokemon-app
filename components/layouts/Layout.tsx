@@ -1,12 +1,13 @@
 import Head from "next/head";
 import React, { ReactNode } from "react";
+import Navbar from "../ui/Navbar";
 
 interface Props {
   children: ReactNode;
   title?: string;
 }
 
-export const Layout = ({ children, title }: Props) => {
+export const Layout: React.FC<Props> = ({ children, title }) => {
   return (
     <>
       <Head>
@@ -17,8 +18,15 @@ export const Layout = ({ children, title }: Props) => {
       </Head>
 
       {/* Navbar */}
+      <Navbar />
 
-      <main>{children}</main>
+      <main
+        style={{
+          padding: "0px 20px",
+        }}
+      >
+        {children}
+      </main>
     </>
   );
 };
