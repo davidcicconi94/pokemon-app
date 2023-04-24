@@ -1,7 +1,6 @@
 import Head from "next/head";
 import React, { ReactNode } from "react";
 import Navbar from "../ui/Navbar";
-import { useTheme } from "@nextui-org/react";
 
 interface Props {
   children: ReactNode;
