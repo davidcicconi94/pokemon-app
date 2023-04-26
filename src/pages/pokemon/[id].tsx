@@ -1,48 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Layout } from "../../../components/layouts";
 
 import { useRouter } from "next/router";
 import { NextPage, GetStaticProps, GetStaticPaths } from "next";
+import { pokeApi } from "../../../api";
+import { DetailsPoke, PokemonList } from "../../../interfaces";
 
 interface Props {
-  id: string;
-  name: string;
+  pokemon: DetailsPoke;
 }
 
-const Details: NextPage<Props> = ({ id, name }) => {
-  const { query } = useRouter();
-  console.log(query);
-
+const Details: NextPage<Props> = ({ pokemon }) => {
   return (
     <Layout title="Detalle">
-      <h2>Aca estan los detalles</h2>
-      <h3>
-        {" "}
-        {id} - {name}{" "}
-      </h3>
+      <h2> {pokemon.name.toUpperCase()} </h2>
     </Layout>
   );
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
+  // Generar un arreglo de 151 IDs
+  const pokemonId: string[] = [];
+
+  for (let index = 0; index < 151; index++) {
+    pokemonId.push(index.toString());
+  }
+
   return {
-    paths: [
-      {
-        params: {
-          id: "1",
-        },
-      },
-    ],
+    paths: pokemonId.map((idPokemon) => ({
+      params: { id: idPokemon },
+    })),
     fallback: false,
   };
 };
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  // capturamos el param a través del contexto (ctx)
+  const { id } = params as { id: string };
+
+  const { data } = await pokeApi.get<DetailsPoke>(`/pokemon/${id}`);
+
   return {
     props: {
-      id: "1",
-      name: "Bolvasor",
+      pokemon: data,
     },
   };
 };
