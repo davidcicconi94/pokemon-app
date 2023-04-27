@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Layout } from "../../../components/layouts";
 
 import { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import { pokeApi } from "../../../api";
-import { DetailsPoke, PokemonList } from "../../../interfaces";
+import { DetailsPoke } from "../../../interfaces";
 import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
+import { localFavorites } from "../../../utils";
 
 interface Props {
   pokemon: DetailsPoke;
 }
 
 const Details: NextPage<Props> = ({ pokemon }) => {
+  const onToggleFavorite = () => {
+    localFavorites(pokemon.id);
+  };
+
   return (
-    <Layout title="Detalle">
+    <Layout title={pokemon.name[0].toUpperCase() + pokemon.name.substring(1)}>
       <Grid.Container css={{ marginTop: "10px" }} gap={2}>
         <Grid xs={12} sm={4}>
           <Card>
@@ -35,7 +40,7 @@ const Details: NextPage<Props> = ({ pokemon }) => {
               <Text h2 transform="uppercase">
                 {pokemon.name}
               </Text>
-              <Button color="warning" ghost>
+              <Button onPress={onToggleFavorite} color="warning" ghost>
                 Add to favorites
               </Button>
             </Card.Header>
@@ -80,17 +85,19 @@ const Details: NextPage<Props> = ({ pokemon }) => {
                       width: "5%",
                       marginRight: "15px",
                     }}
-                    key={type}
+                    key={type.name}
                     color={
                       type.name === "fire"
                         ? "error"
-                        : type.name === "water" || "psychic"
+                        : type.name === "water"
                         ? "primary"
-                        : type.name === "poison" || "grass"
+                        : type.name === "grass" || type.name === "bug"
                         ? "success"
-                        : type.name === "ground"
+                        : type.name === "electric"
                         ? "warning"
-                        : "success"
+                        : type.name === "ground"
+                        ? "secondary"
+                        : "secondary"
                     }
                   >
                     {" "}
@@ -120,7 +127,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
   // Generar un arreglo de 151 IDs
   const pokemonId: string[] = [];
 
-  for (let index = 0; index < 151; index++) {
+  for (let index = 0; index < 152; index++) {
     pokemonId.push(index.toString());
   }
 
