@@ -1,12 +1,22 @@
-import React from "react";
-import { Layout } from "../../../components/layouts";
+import React, { useEffect, useState } from "react";
 
-const index = () => {
+import { Layout } from "../../../components/layouts";
+import NoFavorites from "../../../components/ui/NoFavorites";
+import { localFavorites } from "../../../utils";
+
+const FavoritesPage = () => {
+  const [favoritePoke, setFavoritePoke] = useState<number[]>([]);
+
+  useEffect(() => {
+    setFavoritePoke(localFavorites.pokemonFavorites());
+  }, []);
+
+  console.log(favoritePoke);
   return (
     <Layout title="My Pokemons">
-      <h2>Favorites</h2>
+      <NoFavorites />
     </Layout>
   );
 };
 
-export default index;
+export default FavoritesPage;

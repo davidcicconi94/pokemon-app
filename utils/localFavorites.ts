@@ -22,9 +22,14 @@ const isPokemonInFavorites = (id: number): boolean => {
   return favorites.includes(id);
 };
 
+const pokemonFavorites = (): number[] => {
+  return JSON.parse(localStorage.getItem("favorites") || "[]");
+};
+
 const Utils = {
   isPokemonInFavorites,
   toggleFavorite,
+  pokemonFavorites,
 };
 
 export default Utils;
