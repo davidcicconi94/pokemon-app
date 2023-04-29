@@ -104,31 +104,33 @@ const Details: NextPage<Props> = ({ pokemon }) => {
                 <Text h3 css={{ marginRight: "25px" }}>
                   Type:{" "}
                 </Text>
-                {pokemon.types.map(({ type }: any) => (
-                  <Button
-                    css={{
-                      width: "5%",
-                      marginRight: "15px",
-                    }}
-                    key={type.name}
-                    color={
-                      type.name === "fire"
-                        ? "error"
-                        : type.name === "water"
-                        ? "primary"
-                        : type.name === "grass" || type.name === "bug"
-                        ? "success"
-                        : type.name === "electric"
-                        ? "warning"
-                        : type.name === "ground"
-                        ? "secondary"
-                        : "secondary"
-                    }
-                  >
-                    {" "}
-                    {type.name.toUpperCase()}{" "}
-                  </Button>
-                ))}
+                {pokemon.types.map(
+                  ({ type }): JSX.Element => (
+                    <Button
+                      css={{
+                        width: "5%",
+                        marginRight: "15px",
+                      }}
+                      key={type.name}
+                      color={
+                        type.name === "fire"
+                          ? "error"
+                          : type.name === "water"
+                          ? "primary"
+                          : type.name === "grass" || type.name === "bug"
+                          ? "success"
+                          : type.name === "electric"
+                          ? "warning"
+                          : type.name === "ground"
+                          ? "secondary"
+                          : "secondary"
+                      }
+                    >
+                      {" "}
+                      {type.name.toUpperCase()}{" "}
+                    </Button>
+                  )
+                )}
               </Container>
             </Card.Body>
             <Card.Body>
