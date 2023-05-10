@@ -1,12 +1,14 @@
 import React, { FC, useState } from "react";
 
 import { GetStaticProps, GetStaticPaths } from "next";
-import { pokeApi } from "../../../api";
-import { DetailsPoke, PokemonList } from "../../../interfaces";
-import confetti from "canvas-confetti";
-import { Layout } from "../../../components/layouts";
 import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
+
+import confetti from "canvas-confetti";
+
+import { pokeApi } from "../../../api";
 import utils from "../../../utils/localFavorites";
+import { Layout } from "../../../components/layouts";
+import { DetailsPoke, PokemonList } from "../../../interfaces";
 
 interface Props {
   pokemon: DetailsPoke;
@@ -173,9 +175,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     `https://pokeapi.co/api/v2/pokemon/${name}`
   );
 
+  const pokemon = {
+    id: data.name,
+    name: data.name,
+    sprites: data.sprites,
+    types: data.types,
+  };
+
+  console.log("POKE:", pokemon);
+
   return {
     props: {
-      pokemon: data,
+      pokemon,
     },
   };
 };
