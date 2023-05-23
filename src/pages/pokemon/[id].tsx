@@ -9,6 +9,7 @@ import { Layout } from "../../../components/layouts";
 import { pokeApi } from "../../../api";
 import { DetailsPoke } from "../../../interfaces";
 import utils from "../../../utils/localFavorites";
+import { getInfo } from "../../../utils";
 
 interface Props {
   pokemon: DetailsPoke;
@@ -170,18 +171,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // capturamos el param a través del contexto (ctx)
   const { id } = params as { id: string };
 
-  const { data } = await pokeApi.get<DetailsPoke>(`/pokemon/${id}`);
-
-  const pokemon = {
-    id: data.id,
-    name: data.name,
-    sprites: data.sprites,
-    types: data.types,
-  };
-
   return {
     props: {
-      pokemon,
+      pokemon: await getInfo(id),
     },
   };
 };
