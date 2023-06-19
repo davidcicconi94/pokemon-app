@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React, { ReactNode } from "react";
+
 import { Navbar } from "../ui";
 
 interface Props {
@@ -10,8 +11,6 @@ interface Props {
 const origin = typeof window === "undefined" ? "" : window.location.origin;
 
 export const Layout: React.FC<Props> = ({ children, title }) => {
-  console.log(origin);
-
   return (
     <>
       <Head>

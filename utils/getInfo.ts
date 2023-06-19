@@ -9,5 +9,7 @@ export const getInfo = async (urlType: string) => {
     name: data.name,
     sprites: data.sprites,
     types: data.types,
+    height: data.height,
+    weight: data.weight,
   };
 };

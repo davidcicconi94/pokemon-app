@@ -154,6 +154,7 @@ const Details: NextPage<Props> = ({ pokemon }) => {
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   // Generar un arreglo de 151 IDs
   const pokemons151 = [...Array(151)].map((value, index) => `${index + 1}`);
+  console.log(pokemons151);
 
   return {
     paths: pokemons151.map((id) => ({
