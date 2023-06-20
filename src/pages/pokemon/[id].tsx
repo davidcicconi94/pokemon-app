@@ -154,13 +154,12 @@ const Details: NextPage<Props> = ({ pokemon }) => {
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   // Generar un arreglo de 151 IDs
   const pokemons151 = [...Array(151)].map((value, index) => `${index + 1}`);
-  console.log(pokemons151);
 
   return {
     paths: pokemons151.map((id) => ({
       params: { id },
     })),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
@@ -168,10 +167,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // capturamos el param a través del contexto (ctx)
   const { id } = params as { id: string };
 
+  const pokemon = await getInfo(id);
+
+  if (!pokemon) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
-      pokemon: await getInfo(id),
+      pokemon,
     },
+    revalidate: 86400, // segundos
   };
 };
 
